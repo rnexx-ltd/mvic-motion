@@ -22,7 +22,37 @@
 
 ---
 
-## 2. Les prompts Nano Banana
+## 2. Les images de référence (extraites des vidéos analysées)
+
+Ce sont 5 images, recadrées sans texte ni marges et agrandies ×2. **Elles servent uniquement de référence de rendu** : jamais publiées, jamais versionnées dans ce dépôt (c'est l'œuvre d'un autre créateur).
+
+| Fichier | Ce qu'elle apprend à l'IA | À joindre pour |
+|---|---|---|
+| `ref1-trait-et-halo.png` | Contour sombre d'épaisseur variable, aplats à 2 tons, **halo rouge-orangé** autour du personnage | Toutes les générations de personnages |
+| `ref2-lumiere-profondeur.png` | Contre-jour doré, **flou de profondeur**, palette pêche / bordeaux | Image de style, décors |
+| `ref3-femme-expression.png` | **Visage féminin expressif**, choc comique, lumière chaude | Expressions de Mami (yeux écarquillés, « HEIN ») |
+| `ref4-gros-plan-choc.png` | **Très gros plan** cinématographique, yeux écarquillés, peau en contre-jour | `mami-cu-eyes-wide`, `mami-cu-focus` |
+| `ref5-ambiance-cinema.png` | Ambiance de film : lumière de fin de journée, ombres violacées, grain | Image de style, décors |
+
+**Consigne à ajouter au début de chaque prompt qui joint une ou plusieurs de ces images :**
+
+```
+The attached reference images are for RENDERING STYLE ONLY: line quality, cel-shading, lighting,
+rim glow, colour palette, depth of field and film grain. Do NOT copy their characters, faces,
+hairstyles, clothing, poses or compositions. Create an entirely new, original character and scene
+as described below.
+```
+
+**Ordre recommandé :**
+1. **Image de style (Prompt 1)** : joindre `ref1` + `ref2` + `ref5`, avec la consigne.
+2. **Fiche personnage (Prompt 2)** : joindre **uniquement l'image de style retenue**, pas les références Higordo. À partir de là, notre image de style devient la seule référence, ce qui limite le risque de copie.
+3. **Expressions (Prompts 3)** : joindre la fiche de Mami, plus `ref3` ou `ref4` *pour l'expression seulement*, avec la consigne.
+
+> **Contrôle systématique :** si une image générée ressemble à un personnage de Higordo (coiffure, visage, tenue, pose), on la jette.
+
+---
+
+## 3. Les prompts Nano Banana
 
 > Les prompts sont en anglais (meilleurs résultats). Génère **2 à 4 variantes** pour l'image de style et la fiche personnage, puis envoie-les-moi toutes : on choisit ensemble.
 > **Format :** la plus haute résolution disponible. Pour les personnages, **fond uni gris clair** (`#E6E6E6`), sans ombre au sol, pour faciliter le détourage.
@@ -88,13 +118,13 @@ focus background. Vertical 9:16. No text, no logos, no brand names.
 
 ---
 
-## 3. Ce que je fais ici, en parallèle et en attendant tes images
+## 4. Ce que je fais ici, en parallèle et en attendant tes images
 
 - Je reconstruis en code le **bloc réel « nom du titulaire »** (badge Orange + nom officiel en majuscules) et la frappe du numéro `6 95 88 •• ••`.
 - J'installe le **détourage automatique** (modèle open source, en local) et je le teste.
 - Je prépare la **mise en scène des 8 secondes** sur des images provisoires (animatique), pour valider le timing **avant** les images définitives.
 
-## 4. Son nécessaire pour la scène test
+## 5. Son nécessaire pour la scène test
 
 | Fichier | Contenu |
 |---|---|
@@ -103,7 +133,7 @@ focus background. Vertical 9:16. No text, no logos, no brand names.
 | `musique-test.mp3` | ≈ 20 s d'afro-pop légère, que je couperai net au plan 4 |
 | Effets | « tic » de notification, « woosh », impact comique, bruit de lunettes qui glissent (optionnel) |
 
-## 5. Grille d'évaluation (on note chaque point de 1 à 5 en comparant à Higordo)
+## 6. Grille d'évaluation (on note chaque point de 1 à 5 en comparant à Higordo)
 
 1. Le personnage reste-t-il **identique** d'une image à l'autre ?
 2. Les **expressions** sont-elles lisibles et drôles ?
