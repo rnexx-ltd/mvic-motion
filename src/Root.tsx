@@ -1,9 +1,10 @@
-import { MyComposition } from "./Composition";
+import { Composition, Folder } from "remotion";
+import { MvicTest } from "./MvicTest";
 
 export const RemotionRoot: React.FC = () => {
   return (
-    <>
-      <MyComposition />
-    </>
+    <Folder name="Tests">
+      <Composition id="MvicTest01" component={MvicTest} durationInFrames={450} fps={30} width={1080} height={1920} />
+    </Folder>
   );
 };
