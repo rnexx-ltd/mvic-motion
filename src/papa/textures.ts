@@ -247,3 +247,59 @@ export const drawLcd = (canvas: HTMLCanvasElement, lines: string[], icon: "mic" 
   c.font = "bold 30px monospace";
   lines.forEach((l, i) => c.fillText(l, w / 2, h * 0.62 + i * 38));
 };
+
+// Toile cirée de table (motif fleuri à carreaux, usée)
+export const oilclothTexture = () =>
+  make(
+    "oilcloth",
+    1024,
+    1024,
+    (c, w, h) => {
+      c.fillStyle = "#b9a684";
+      c.fillRect(0, 0, w, h);
+      const n = 8;
+      const s = w / n;
+      for (let y = 0; y < n; y++)
+        for (let x = 0; x < n; x++) {
+          if ((x + y) % 2 === 0) {
+            c.fillStyle = "rgba(128,30,24,0.95)";
+            c.fillRect(x * s, y * s, s, s);
+          }
+          // fleur
+          const cx = x * s + s / 2;
+          const cy = y * s + s / 2;
+          for (let p = 0; p < 5; p++) {
+            const a = (p / 5) * Math.PI * 2;
+            c.fillStyle = (x + y) % 2 === 0 ? "#f2d27a" : "#2f6b4a";
+            c.beginPath();
+            c.ellipse(cx + Math.cos(a) * 18, cy + Math.sin(a) * 18, 14, 8, a, 0, Math.PI * 2);
+            c.fill();
+          }
+          c.fillStyle = "#3a1d10";
+          c.beginPath();
+          c.arc(cx, cy, 7, 0, Math.PI * 2);
+          c.fill();
+        }
+      // usure : zones délavées et rayures
+      for (let i = 0; i < 60; i++) {
+        const x = r(`ox${i}`) * w;
+        const y = r(`oy${i}`) * h;
+        const g = c.createRadialGradient(x, y, 0, x, y, 40 + r(`or${i}`) * 90);
+        g.addColorStop(0, "rgba(255,245,220,0.25)");
+        g.addColorStop(1, "rgba(255,245,220,0)");
+        c.fillStyle = g;
+        c.fillRect(0, 0, w, h);
+      }
+      for (let i = 0; i < 120; i++) {
+        c.strokeStyle = `rgba(255,255,240,${0.08 + r(`os${i}`) * 0.15})`;
+        c.lineWidth = 1;
+        const x = r(`osx${i}`) * w;
+        const y = r(`osy${i}`) * h;
+        c.beginPath();
+        c.moveTo(x, y);
+        c.lineTo(x + (r(`osl${i}`) - 0.5) * 90, y + (r(`osm${i}`) - 0.5) * 20);
+        c.stroke();
+      }
+    },
+    [2, 2]
+  );

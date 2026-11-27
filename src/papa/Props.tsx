@@ -8,7 +8,7 @@ export const flicker = (f: number, seed = 0) =>
   0.78 + 0.12 * Math.sin(f * 0.9 + seed) + 0.07 * Math.sin(f * 2.3 + seed * 3) + 0.05 * (random(`fl${Math.floor(f / 2)}-${seed}`) - 0.5);
 
 // ── Vieux téléphone à clavier, écran LCD vivant ──
-export const OldPhone: React.FC<{ frame: number; lines: string[]; icon: "mic" | "sms" | "none"; glow: number; vibrate: number; position: [number, number, number]; rotation?: [number, number, number]; scale?: number }> = ({
+export const OldPhone: React.FC<{ frame: number; lines: string[]; icon: "mic" | "sms" | "none"; glow: number; vibrate: number; position: [number, number, number]; rotation?: [number, number, number]; scale?: number; lightIntensity?: number }> = ({
   frame,
   lines,
   icon,
@@ -17,6 +17,7 @@ export const OldPhone: React.FC<{ frame: number; lines: string[]; icon: "mic" | 
   position,
   rotation,
   scale = 1,
+  lightIntensity,
 }) => {
   const canvas = useMemo(() => {
     const cv = document.createElement("canvas");
@@ -57,7 +58,7 @@ export const OldPhone: React.FC<{ frame: number; lines: string[]; icon: "mic" | 
         </mesh>
       ))}
       {/* lumière de l'écran */}
-      <pointLight position={[0, 0.15, -0.25]} intensity={0.25 + glow * 2.2} distance={1.6} color={glow > 0.5 ? "#bff5d8" : "#c9f2a4"} />
+      <pointLight position={[0, lightIntensity !== undefined ? 1.4 : 0.15, -0.25]} intensity={lightIntensity !== undefined ? lightIntensity : 0.25 + glow * 2.2} distance={lightIntensity !== undefined ? 0 : 1.6} decay={2} color={glow > 0.5 ? "#bff5d8" : "#c9f2a4"} />
     </group>
   );
 };

@@ -5,6 +5,7 @@ import { random, useCurrentFrame, useVideoConfig } from "remotion";
 import * as THREE from "three";
 import { Bible, Glow, Lantern, Mug, OldPhone, Table } from "./Props";
 import { mudWallTexture } from "./textures";
+import { CinemaPost, Lens } from "./Cinema";
 
 export type Cam = { pos: [number, number, number]; look: [number, number, number]; fov: number };
 
@@ -136,11 +137,11 @@ export type TableState = {
   green: number; // 0…1 : reflet vert Mvic sur la scène
 };
 
-export const FatherTable: React.FC<{ cam: Cam; state: TableState }> = ({ cam, state }) => {
+export const FatherTable: React.FC<{ cam: Cam; state: TableState; lens?: Lens }> = ({ cam, state, lens }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   return (
-    <ThreeCanvas width={width} height={height} shadows gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}>
+    <ThreeCanvas width={width} height={height} shadows gl={{ antialias: true, preserveDrawingBuffer: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}>
       <CameraSet cam={cam} />
       <color attach="background" args={["#120a06"]} />
       <fog attach="fog" args={["#1a0d06", 4, 11]} />
@@ -154,6 +155,7 @@ export const FatherTable: React.FC<{ cam: Cam; state: TableState }> = ({ cam, st
       <Mug position={[0.28, 0, -0.32]} jitter={state.vibrate > 0 ? Math.sin(frame * 4.1) * 0.004 * state.vibrate : 0} />
       <Bible position={[-0.75, 0, -0.5]} rotY={0.5} />
       <OldPhone frame={frame} lines={state.lines} icon={state.icon} glow={state.glow} vibrate={state.vibrate} position={[0.08, 0.014, 0.3]} rotation={[0, -0.3, 0]} scale={0.42} />
+      {lens && <CinemaPost lens={lens} />}
       {state.green > 0 && <pointLight position={[0.08, 0.3, 0.3]} intensity={2.5 * state.green} distance={2.5} color="#4FC9A8" />}
     </ThreeCanvas>
   );
@@ -166,6 +168,7 @@ export const FatherTableTest: React.FC = () => {
   return (
     <FatherTable
       cam={{ pos: [0.42 - t * 0.008, 0.58 - t * 0.006, 1.38 - t * 0.025], look: [-0.15, 0.28, -0.6], fov: 42 }}
+      lens={{ focus: 1.3, aperture: 0.012, maxblur: 0.012, bloom: 0.9, bloomRadius: 0.6, bloomThreshold: 0.55 }}
       state={{ lines: ["Enregistrement…", "00:0" + Math.min(9, Math.floor(t))], icon: "mic", glow: 0.2, vibrate: 0, green: 0 }}
     />
   );

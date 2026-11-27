@@ -4,6 +4,8 @@ import { LeNomSceneTest } from "./le-nom/SceneTest";
 import { Proof3D } from "./three/Proof3D";
 import { FleuveTest } from "./fleuve/FleuveTest";
 import { FatherTableTest } from "./papa/FatherTable";
+import { PapaSetTest } from "./papa/PapaSet";
+import { PapaCut } from "./papa/PapaCut";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -12,6 +14,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="LeNomSceneTest" component={LeNomSceneTest} durationInFrames={510} fps={30} width={1080} height={1920} />
       </Folder>
       <Folder name="Papa">
+        <Composition id="PapaCut" component={PapaCut} durationInFrames={684} fps={24} width={1080} height={1920} />
+        <Composition id="PapaSetTest" component={PapaSetTest} durationInFrames={96} fps={24} width={1080} height={1920} />
         <Composition id="PapaTableTest" component={FatherTableTest} durationInFrames={72} fps={24} width={1080} height={1920} />
       </Folder>
       <Folder name="Fleuve">
