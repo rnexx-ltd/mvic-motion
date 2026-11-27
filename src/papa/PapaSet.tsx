@@ -124,7 +124,7 @@ export const PapaScene: React.FC<{ cam: Cam; state: PapaState; lens: Lens }> = (
         <OldPhone frame={frame} lines={state.lines} icon={state.icon} glow={state.glow} vibrate={0} position={[0, 0, 0]} scale={0.1} lightIntensity={0.003 + state.glow * 0.012} />
       </group>
       {/* flamme : lumière physique + halo */}
-      <pointLight position={flame} intensity={0.85 * k} distance={0} decay={2} color="#ffa24c" castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048} shadow-bias={-0.0005} shadow-radius={4} />
+      <pointLight position={flame} intensity={0.85 * k} distance={0} decay={2} color="#ffa24c" castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} shadow-bias={-0.0005} shadow-radius={4} />
       <Glow position={flame} size={0.07} color="#ffe6b0" opacity={k} />
       {state.green > 0 && <pointLight position={[0.06, top + 0.12, 0.17]} intensity={0.5 * state.green} distance={0} decay={2} color="#4FC9A8" />}
       <Dust frame={frame} center={flame} />
