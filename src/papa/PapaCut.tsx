@@ -9,12 +9,12 @@ import { Lens } from "./Cinema";
 
 // « Le vocal de Papa » — séquence de la table du père (montage de référence, voix témoins)
 const FPS = 24;
-const s = (sec: number) => Math.round(sec * FPS);
+export const s = (sec: number) => Math.round(sec * FPS);
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
-const ease = Easing.inOut(Easing.sin);
+export const ease = Easing.inOut(Easing.sin);
 
-const CLOSE_LENS: Lens = { focus: 0.3, aperture: 0.05, maxblur: 0.014, bloom: 0.45, bloomRadius: 0.35, bloomThreshold: 0.9 };
-const WIDE_LENS: Lens = { focus: 1.3, aperture: 0.012, maxblur: 0.01, bloom: 0.5, bloomRadius: 0.4, bloomThreshold: 0.88 };
+export const CLOSE_LENS: Lens = { focus: 0.3, aperture: 0.05, maxblur: 0.014, bloom: 0.45, bloomRadius: 0.35, bloomThreshold: 0.9 };
+export const WIDE_LENS: Lens = { focus: 1.3, aperture: 0.012, maxblur: 0.01, bloom: 0.5, bloomRadius: 0.4, bloomThreshold: 0.88 };
 
 type ShotProps = { dur: number; cam: (t: number, top: number) => Cam; lens: (t: number) => Lens; state: (t: number) => PapaState };
 
@@ -25,14 +25,14 @@ const ShotInner: React.FC<ShotProps> = ({ dur, cam, lens, state }) => {
   return <PapaScene cam={cam(t, top)} lens={lens(t)} state={state(t)} />;
 };
 
-const Shot: React.FC<ShotProps> = (p) => (
+export const Shot: React.FC<ShotProps> = (p) => (
   <PapaCanvas>
     <ShotInner {...p} />
   </PapaCanvas>
 );
 
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const mic = (t: number, glow = 0.25): PapaState => ({ lines: ["Enregistrement…", `00:0${Math.min(9, Math.floor(t * 4))}`], icon: "mic", glow, vibrate: 0, green: 0 });
+export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+export const mic = (t: number, glow = 0.25): PapaState => ({ lines: ["Enregistrement…", `00:0${Math.min(9, Math.floor(t * 4))}`], icon: "mic", glow, vibrate: 0, green: 0 });
 
 export const PAPA_CUT_DURATION = s(28.5);
 

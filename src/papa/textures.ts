@@ -204,7 +204,7 @@ export const fabricTexture = () =>
           c.fill();
         }
     },
-    [3, 3]
+    [9, 9]
   );
 
 // Écran du vieux téléphone (LCD vert monochrome) — redessiné à chaque image

@@ -10,7 +10,7 @@ import { oilclothTexture } from "./textures";
 
 export type Cam = { pos: [number, number, number]; look: [number, number, number]; fov: number };
 
-const CameraSet: React.FC<{ cam: Cam }> = ({ cam }) => {
+export const CameraSetExport: React.FC<{ cam: Cam }> = ({ cam }) => {
   const { camera } = useThree();
   useLayoutEffect(() => {
     camera.position.set(...cam.pos);
@@ -99,7 +99,7 @@ export const PapaScene: React.FC<{ cam: Cam; state: PapaState; lens: Lens }> = (
   const jitter = state.vibrate > 0 ? Math.sin(frame * 4.1) * 0.0015 * state.vibrate : 0;
   return (
     <>
-      <CameraSet cam={cam} />
+      <CameraSetExport cam={cam} />
       <color attach="background" args={["#0b0604"]} />
       <fog attach="fog" args={["#120904", 2.2, 6]} />
       <NightEnvironment intensity={0.12} />
