@@ -6,10 +6,10 @@ import { Model, NightEnvironment, usePbr } from "./assets";
 import { CinemaPost, Lens } from "./Cinema";
 import { Cam, CameraSetExport as CameraSet } from "./PapaSet";
 import { Glow } from "./Props";
-import { drawBattery, drawMvic, drawVoiceNotes } from "./screens";
+import { drawBattery, drawContacts, drawMvic, drawVoiceNotes, MvicCfg } from "./screens";
 import { fabricTexture } from "./textures";
 
-export type Screen = { mode: "voice" | "voice-labels" | "battery" | "mvic"; step?: number; k?: number };
+export type Screen = { mode: "voice" | "voice-labels" | "battery" | "mvic" | "contacts"; step?: number; k?: number; cfg?: MvicCfg };
 
 // Smartphone générique (aucune marque), écran haute définition
 export const Smartphone: React.FC<{ screen: Screen; brightness: number; position: [number, number, number]; rotation: [number, number, number] }> = ({ screen, brightness, position, rotation }) => {
@@ -28,7 +28,8 @@ export const Smartphone: React.FC<{ screen: Screen; brightness: number; position
   }, [canvas]);
   const c = canvas.getContext("2d")!;
   if (screen.mode === "battery") drawBattery(c, canvas.width, canvas.height);
-  else if (screen.mode === "mvic") drawMvic(c, canvas.width, canvas.height, screen.step ?? 0, screen.k ?? 1);
+  else if (screen.mode === "mvic") drawMvic(c, canvas.width, canvas.height, screen.step ?? 0, screen.k ?? 1, screen.cfg);
+  else if (screen.mode === "contacts") drawContacts(c, canvas.width, canvas.height);
   else drawVoiceNotes(c, canvas.width, canvas.height, frame / 30, { labels: screen.mode === "voice-labels" });
   tex.needsUpdate = true;
   return (

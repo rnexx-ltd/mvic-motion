@@ -91,7 +91,9 @@ export const drawBattery = (c: CanvasRenderingContext2D, w: number, h: number) =
 };
 
 // 3) Parcours Mvic (step 0 → 4), fidèle aux écrans de l'app
-export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step: number, k: number) => {
+export type MvicCfg = { amount: string; from: string; to: string; holder: string; short: string; numFrom: string; numTo: string };
+export const PAPA_CFG: MvicCfg = { amount: "25 000", from: "MTN", to: "Orange", holder: "ATANGANA PIERRE", short: "ATANGANA P.", numFrom: "6 77 •• •• ••", numTo: "6 95 •• •• ••" };
+export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step: number, k: number, cfg: MvicCfg = PAPA_CFG) => {
   c.fillStyle = "#F9F9F8";
   c.fillRect(0, 0, w, h);
   statusBar(c, w, false);
@@ -141,17 +143,17 @@ export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step
     c.fillStyle = GRAY;
     c.font = "600 30px 'DM Sans'";
     c.fillText("MONTANT À ENVOYER", w / 2, 320);
-    const amount = step === 0 ? "25 000".slice(0, Math.max(1, Math.round(k * 6))) : "25 000";
+    const amount = step === 0 ? cfg.amount.slice(0, Math.max(1, Math.round(k * cfg.amount.length))) : cfg.amount;
     c.fillStyle = "#2C2A26";
     c.font = "900 130px 'DM Sans'";
     c.fillText(amount, w / 2 - 40, 460);
     c.fillStyle = GRAY;
     c.font = "500 44px 'DM Sans'";
     c.fillText("FCFA", w / 2 + 250, 460);
-    const send = step >= 1 ? "6 77 •• •• ••" : "";
-    field(560, "Numéro expéditeur", send, step >= 1 ? "MTN" : null, step === 1);
-    const rec = step >= 2 ? "6 95 •• •• ••" : "";
-    field(760, "Numéro destinataire", rec, step >= 2 ? "Orange" : null, step === 2 && k < 0.5);
+    const send = step >= 1 ? cfg.numFrom : "";
+    field(560, "Numéro expéditeur", send, step >= 1 ? cfg.from : null, step === 1);
+    const rec = step >= 2 ? cfg.numTo : "";
+    field(760, "Numéro destinataire", rec, step >= 2 ? cfg.to : null, step === 2 && k < 0.5);
     if (step === 2 && k >= 0.45) {
       c.fillStyle = GP;
       rr(c, 90, 920, w - 180, 170, 26);
@@ -159,10 +161,10 @@ export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step
       c.textAlign = "left";
       c.fillStyle = G;
       c.font = "500 32px 'DM Sans'";
-      c.fillText("Orange Money", 130, 975);
+      c.fillText(cfg.to === "MTN" ? "MTN Mobile Money" : "Orange Money", 130, 975);
       c.fillStyle = NIGHT;
       c.font = "700 46px 'DM Sans'";
-      c.fillText("ATANGANA PIERRE", 130, 1045);
+      c.fillText(cfg.holder, 130, 1045);
     }
     c.fillStyle = G;
     rr(c, 90, 1180, w - 180, 130, 30);
@@ -178,7 +180,7 @@ export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step
     c.fillText("VOUS ENVOYEZ", w / 2, 330);
     c.fillStyle = "#2C2A26";
     c.font = "900 120px 'DM Sans'";
-    c.fillText("25 000 FCFA", w / 2, 470);
+    c.fillText(`${cfg.amount} FCFA`, w / 2, 470);
     c.textAlign = "left";
     c.fillStyle = GRAY;
     c.font = "600 30px 'DM Sans'";
@@ -187,10 +189,10 @@ export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step
     c.fillStyle = "#2C2A26";
     c.font = "600 42px 'DM Sans'";
     c.fillText("Vous", 110, 660);
-    c.fillText("ATANGANA P.", w / 2 + 40, 660);
+    c.fillText(cfg.short, w / 2 + 40, 660);
     c.fillStyle = GRAY;
     c.font = "500 32px 'DM Sans'";
-    c.fillText("MTN Mobile Money → Orange Money", 110, 760);
+    c.fillText(`${cfg.from === "MTN" ? "MTN Mobile Money" : "Orange Money"} → ${cfg.to === "MTN" ? "MTN Mobile Money" : "Orange Money"}`, 110, 760);
     c.fillStyle = G;
     rr(c, 90, 1180, w - 180, 130, 30);
     c.fill();
@@ -224,4 +226,29 @@ export const drawMvic = (c: CanvasRenderingContext2D, w: number, h: number, step
       c.fill();
     }
   }
+};
+
+// 4) Contacts : qui est sur quel réseau
+export const drawContacts = (c: CanvasRenderingContext2D, w: number, h: number) => {
+  c.fillStyle = "#14181d";
+  c.fillRect(0, 0, w, h);
+  statusBar(c, w, true, 41, "15:12");
+  const row = (y: number, name: string, net: string, hl: boolean) => {
+    c.fillStyle = hl ? "#22303a" : "#1b2026";
+    rr(c, 50, y, w - 100, 200, 34);
+    c.fill();
+    c.fillStyle = "#8a6a4e";
+    c.beginPath();
+    c.arc(150, y + 100, 56, 0, Math.PI * 2);
+    c.fill();
+    c.textAlign = "left";
+    c.fillStyle = "#f2efe8";
+    c.font = "700 56px 'DM Sans'";
+    c.fillText(name, 240, y + 92);
+    c.fillStyle = "#9aa3ad";
+    c.font = "500 40px 'DM Sans'";
+    c.fillText(net, 240, y + 150);
+  };
+  row(300, "Vous", "Orange", false);
+  row(560, "Maman", "MTN", true);
 };

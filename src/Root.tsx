@@ -8,12 +8,16 @@ import { PapaSetTest } from "./papa/PapaSet";
 import { PapaCut } from "./papa/PapaCut";
 import { SonRoomTest } from "./papa/SonRoom";
 import { PapaFull } from "./papa/PapaFull";
+import { MamanFilm } from "./maman/MamanFilm";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Folder name="LeNom">
         <Composition id="LeNomSceneTest" component={LeNomSceneTest} durationInFrames={510} fps={30} width={1080} height={1920} />
+      </Folder>
+      <Folder name="Maman">
+        <Composition id="MamanFilm" component={MamanFilm} durationInFrames={960} fps={24} width={1080} height={1920} />
       </Folder>
       <Folder name="Papa">
         <Composition id="PapaFull" component={PapaFull} durationInFrames={1207} fps={24} width={1080} height={1920} />
